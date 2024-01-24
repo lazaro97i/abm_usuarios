@@ -11,8 +11,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -26,13 +30,12 @@ public class User {
     @Column(name = "nombre", nullable = false)
     private String name;
     
-    @Column(nullable = false, unique = true, length = 8)
+    @Column(nullable = false, unique = true)
     private int dni;
     
     private String email;
     
     @JoinColumn(name = "rol_id", nullable = false)
-    @Enumerated(EnumType.STRING)
     @ManyToOne(targetEntity = Role.class)
     private Role role;
     

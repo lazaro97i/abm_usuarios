@@ -1,5 +1,6 @@
 package users.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,10 +12,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -26,11 +32,12 @@ public class Role {
     private Long id;
     
     @Enumerated(EnumType.STRING)
-    @Column(name = "rol")
+    @Column(name = "rol", unique = true)
     private CategoryType role;
     
     @OneToMany(targetEntity = User.class, fetch = FetchType.LAZY, mappedBy = "role")
-    private List<User> users;
+    @JsonIgnore
+    private List<User> users = new ArrayList<>();
     
     public enum CategoryType{
         ADMIN_ROLE, USER_ROLE
