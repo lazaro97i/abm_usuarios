@@ -1,11 +1,15 @@
 import './App.css'
+import { RouterProvider } from 'react-router-dom'
+import router from './router/router'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
 
   return (
-    <div>
-      <p className='text-center font-medium text-4xl py-4'>Administrador de usuarios</p>
-    </div>
+    <>
+      <Toaster />
+      <RouterProvider router={router} />
+    </>
   )
 }
 

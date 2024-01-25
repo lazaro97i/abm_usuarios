@@ -6,4 +6,11 @@
   padding: 0%;
   margin: 0%;
   box-sizing: border-box;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+:root {
+  background: rgb(131, 152, 184);
+  background: linear-gradient(180deg, rgba(131, 152, 184, 1) 0%, rgba(231, 240, 248, 1) 100%);
+  color: #414e6e;
 }
