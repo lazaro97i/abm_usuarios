@@ -9,8 +9,14 @@
   font-family: 'IBM Plex Sans', sans-serif;
 }
 
-:root {
+body {
   background: rgb(131, 152, 184);
   background: linear-gradient(180deg, rgba(131, 152, 184, 1) 0%, rgba(231, 240, 248, 1) 100%);
+  height: 100vh;
+  overflow: auto;
+}
+
+:root {
   color: #414e6e;
+  overflow: auto;
 }

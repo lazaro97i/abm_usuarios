@@ -3,7 +3,7 @@ import UserForm from '../components/UserForm'
 
 const AddUser = () => {
   return (
-    <div className='h-full flex justify-center'>
+    <div className='flex justify-center items-center'>
       <UserForm />
     </div>
   )

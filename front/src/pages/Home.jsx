@@ -1,25 +1,25 @@
-import React, { useEffect } from 'react'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import UserTable from '../components/UserTable'
+import userServices from '../services/userServices'
+
+const { getUsers } = userServices
+
 
 const Home = () => {
 
+  const [users, setUsers] = useState(null)
+
   useEffect(() => {
-
     getUsers()
-
+      .then(data => setUsers(data))
+      .catch(e => console.log(e))
   }, [])
 
-  const getUsers = async () => {
-
-    const res = await axios.get("http://localhost:8080/api/user");
-
-    console.log(res)
-
-  }
-
   return (
-    <div className='h-full flex justify-center'>
-      holis
+    <div className='flex justify-center'>
+      <UserTable
+        data={users}
+      />
     </div>
   )
 }

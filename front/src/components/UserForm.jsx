@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react'
 import toast from 'react-hot-toast'
-import axios from 'axios'
+import userServices from '../services/userServices'
+
+const { newUser } = userServices
 
 const UserForm = () => {
 
@@ -19,14 +21,14 @@ const UserForm = () => {
       role: { id: role }
     }
     const res = await toast.promise(
-      axios.post('http://localhost:8080/api/user', data),
+      newUser(data),
       {
         loading: 'Creando usuario...',
         success: 'Usuario creado exitosamente!',
         error: 'Error al crear el usuario'
       }, { duration: 3000 }
     )
-    if (res?.data.Success) {
+    if (res?.success) {
       document.getElementById("formNewUser").reset()
     }
 
