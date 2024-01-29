@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ public class UserController {
 
     HashMap<String, Object> data;
 
+    @CrossOrigin(origins = "http://localhost:5173/")
     @GetMapping("")
     public ResponseEntity<?> findAll() {
 
@@ -44,16 +46,24 @@ public class UserController {
                 .toList();
 
         if (users.size() > 0) {
-            data.put("Success", true);
-            data.put("Message", "Usuarios encontrados");
-            data.put("Data", users);
+            data.put("success", true);
+            data.put("message", "Usuarios cargados correctamente");
+            data.put("data", users);
+            return new ResponseEntity<>(
+                    data,
+                    HttpStatus.OK
+            );
+        }else if(users.size() == 0){
+            data.put("success", true);
+            data.put("message", "No hay usuarios para mostrar");
+            data.put("data", users);
             return new ResponseEntity<>(
                     data,
                     HttpStatus.OK
             );
         }
-        data.put("Success", false);
-        data.put("Message", "No se encontraron usuarios");
+        data.put("success", false);
+        data.put("message", "Error al cargar usuarios");
         return new ResponseEntity<>(
                 data,
                 HttpStatus.NOT_FOUND
@@ -79,9 +89,9 @@ public class UserController {
                     .role(user.getRole())
                     .build();
 
-            data.put("Success", true);
-            data.put("Message", "Usuario encontrado");
-            data.put("Data", userDTO);
+            data.put("success", true);
+            data.put("message", "Usuario encontrado");
+            data.put("data", userDTO);
 
             return new ResponseEntity<>(
                     data,
@@ -90,8 +100,8 @@ public class UserController {
 
         }
 
-        data.put("Success", false);
-        data.put("Message", "Usuario no encontrado");
+        data.put("success", false);
+        data.put("message", "Usuario no encontrado");
 
         return new ResponseEntity(
                 data,
@@ -100,6 +110,7 @@ public class UserController {
 
     }
 
+    @CrossOrigin(origins = "http://localhost:5173/")
     @PostMapping("")
     public ResponseEntity<?> save(@RequestBody UserDTO userDTO) {
 
@@ -109,8 +120,8 @@ public class UserController {
                 || userDTO.getEmail().isBlank()
                 || userDTO.getDni() == 0
                 || userDTO.getRole() == null) {
-            data.put("Success", false);
-            data.put("Message", "Error al agregar usuario");
+            data.put("success", false);
+            data.put("message", "Error al agregar usuario");
             return new ResponseEntity<>(
                     data,
                     HttpStatus.BAD_REQUEST
@@ -125,9 +136,9 @@ public class UserController {
                 .build()
         );
 
-        data.put("Success", true);
-        data.put("Message", "Usuario agregado correctamente!");
-        data.put("Data", userDTO);
+        data.put("success", true);
+        data.put("message", "Usuario agregado correctamente!");
+        data.put("data", userDTO);
 
         return new ResponseEntity<>(
                 data,
@@ -161,9 +172,9 @@ public class UserController {
             
             userService.save(user);
             
-            data.put("Success", true);
-            data.put("Message", "usuario actualizado correctamente");
-            data.put("DataUpdated", user);
+            data.put("success", true);
+            data.put("message", "usuario actualizado correctamente");
+            data.put("dataUpdated", user);
 
             return new ResponseEntity<>(
                     data,
@@ -171,8 +182,8 @@ public class UserController {
             );
         }
 
-        data.put("Success", false);
-        data.put("Message", "Error al actualizar usuario");
+        data.put("success", false);
+        data.put("message", "Error al actualizar usuario");
 
         return new ResponseEntity<>(
                 data,
@@ -181,6 +192,7 @@ public class UserController {
 
     }
 
+    @CrossOrigin(origins = "http://localhost:5173/")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteOne(@PathVariable Long id) {
 
@@ -189,9 +201,9 @@ public class UserController {
 
         if (exist) {
             Optional<User> res = userService.findById(id);
-            data.put("Success", true);
-            data.put("Message", "Usuario eliminado correctamente");
-            data.put("Data", res);
+            data.put("success", true);
+            data.put("message", "Usuario eliminado correctamente");
+            data.put("data", res);
             userService.deleteById(id);
             return new ResponseEntity<>(
                     data,
@@ -199,8 +211,8 @@ public class UserController {
             );
         }
 
-        data.put("Success", false);
-        data.put("Message", "Usuario no encontrado");
+        data.put("success", false);
+        data.put("message", "Usuario no encontrado");
 
         return new ResponseEntity<>(
                 data,
