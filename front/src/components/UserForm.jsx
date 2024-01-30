@@ -35,9 +35,9 @@ const UserForm = () => {
   }
 
   return (
-    <div className='flex flex-col justify-start items-center'>
+    <div className='flex flex-col justify-start items-center w-full'>
       <h2 className='text-3xl mb-20 mt-10 underline text-[#262c40]'>Agregar usuario</h2>
-      <form id='formNewUser' className='self-center grid grid-cols-1 w-full'>
+      <form id='formNewUser' className='self-center grid grid-cols-1 w-full max-w-[650px]'>
         <label className='flex flex-col mb-10 gap-3 w-full px-10 justify-between'>
           <span className='text-xl'>Apellido y nombre:</span>
           <input type="text" className='pl-3 outline-none bg-transparent border-b border-[#6374ae] rounded-b-md' ref={inpName} />
@@ -48,7 +48,7 @@ const UserForm = () => {
         </label>
         <label className='flex flex-col mb-10 gap-3 w-full px-10 justify-between'>
           <span className='text-xl'>Dni:</span>
-          <input type="number" className='pl-3 outline-none bg-transparent border-b border-[#6374ae] rounded-b-md' ref={inpDni} />
+          <input onWheel={(e) => e.target.blur()} type="number" className='pl-3 outline-none bg-transparent border-b border-[#6374ae] rounded-b-md' ref={inpDni} />
         </label>
         <label className='flex flex-col mb-10 gap-8 w-full px-10 justify-between'>
           <span className='text-xl'>Rol de usuario:</span>

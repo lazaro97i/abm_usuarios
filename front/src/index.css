@@ -20,3 +20,10 @@ body {
   color: #414e6e;
   overflow: auto;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  background: transparent;
+}
