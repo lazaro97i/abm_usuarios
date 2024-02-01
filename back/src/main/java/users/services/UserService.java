@@ -3,6 +3,7 @@ package users.services;
 
 import java.util.List;
 import java.util.Optional;
+import org.springframework.http.ResponseEntity;
 import users.entities.User;
 
 public interface UserService {
@@ -11,7 +12,7 @@ public interface UserService {
     
     Optional<User> findById(Long id);
     
-    void save(User user);
+    public ResponseEntity<?> postUser (User user);
     
     void deleteById(Long id);
     
