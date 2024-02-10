@@ -35,7 +35,7 @@ const Nav = () => {
         <ul className='pt-24 px-8 flex flex-col gap-7 text-[#6374ae] text-xl font-light'>
           <li onClick={() => { showNav(false) }} className=' h-[38px] text-ellipsis overflow-hidden cursor-pointer border border-transparent hover:border hover:border-[#6374ae] py-1 pl-3 transition-all duration-300 rounded-md w-full'><Link className='w-full' to={"/"}>Inicio</Link></li>
           <li onClick={() => { showNav(false) }} className=' h-[38px] text-ellipsis overflow-hidden cursor-pointer border border-transparent hover:border hover:border-[#6374ae] py-1 pl-3 transition-all duration-300 rounded-md'><Link className='w-full' to={"/add_user"}>Agregar usuario</Link></li>
-          <li onClick={() => { showNav(false) }} className=' h-[38px] text-ellipsis overflow-hidden cursor-pointer border border-transparent hover:border hover:border-[#6374ae] py-1 pl-3 transition-all duration-300 rounded-md'>Modificar usuario</li>
+          <li onClick={() => { showNav(false) }} className=' h-[38px] text-ellipsis overflow-hidden cursor-pointer border border-transparent hover:border hover:border-[#6374ae] py-1 pl-3 transition-all duration-300 rounded-md'><Link className='w-full' to={"/update_user/:"}>Modificar usuario</Link></li>
           <li onClick={() => { showNav(false) }} className=' h-[38px] text-ellipsis overflow-hidden cursor-pointer border border-transparent hover:border hover:border-[#6374ae] py-1 pl-3 transition-all duration-300 rounded-md'>Eliminar usuario</li>
         </ul>
       </div>

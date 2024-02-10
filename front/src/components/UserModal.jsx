@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import userServices from '../services/userServices'
 import toast from 'react-hot-toast'
+import { Link } from 'react-router-dom'
 
 const { deleteUser } = userServices
 
@@ -57,7 +58,7 @@ const UserModal = ({ data, modal }) => {
           <p className='col-span-2'>{data.role.id === 1 ? 'ADMIN' : 'USUARIO'}</p>
         </section>
         <div className='flex flex-nowrap justify-center items-center w-3/4 mt-10 mb-5 gap-x-5'>
-          <input className=' bg-primary-900 hover:bg-primary-800 text-primary-100 py-1 w-[100px] rounded-sm cursor-pointer ' type="button" value="Modificar" />
+          <Link to={`update_user/${data.dni}`} className='text-center bg-primary-900 hover:bg-primary-800 text-primary-100 py-1 w-[100px] rounded-sm cursor-pointer'>Modificar</Link>
           <input onClick={() => { setModalDelete(true) }} className=' bg-[#b91c1c] hover:bg-[#dc2626] text-primary-100 py-1 w-[100px] rounded-sm cursor-pointer ' type="button" value="Eliminar" />
         </div>
       </div>

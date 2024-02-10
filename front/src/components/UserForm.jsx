@@ -4,7 +4,7 @@ import userServices from '../services/userServices'
 
 const { newUser } = userServices
 
-const UserForm = () => {
+const UserForm = ({data}) => {
 
   const [role, setRole] = useState('')
 
@@ -20,35 +20,33 @@ const UserForm = () => {
       dni: inpDni.current.value,
       role: { id: role }
     }
-    const res = await toast.promise(
-      newUser(data),
-      {
-        loading: 'Creando usuario...',
-        success: 'Usuario creado exitosamente!',
-        error: 'Error al crear el usuario'
-      }, { duration: 3000 }
-    )
+    const res = await newUser(data)
+
+    console.log(res)
+
     if (res?.success) {
       document.getElementById("formNewUser").reset()
+      toast.success("Usuario agregado correctamente");
+    }else{
+      toast.error(res?.message?.message);
     }
 
   }
 
   return (
     <div className='flex flex-col justify-start items-center w-full'>
-      <h2 className='text-3xl mb-20 mt-10 underline text-[#262c40]'>Agregar usuario</h2>
       <form id='formNewUser' className='self-center grid grid-cols-1 w-full max-w-[650px]'>
         <label className='flex flex-col mb-10 gap-3 w-full px-10 justify-between'>
           <span className='text-xl'>Apellido y nombre:</span>
-          <input type="text" className='pl-3 outline-none bg-transparent border-b border-[#6374ae] rounded-b-md' ref={inpName} />
+          <input type="text" className='pl-3 outline-none bg-transparent border-b border-[#6374ae] rounded-b-md' ref={inpName} defaultValue={data ? data?.name : ""}/>
         </label>
         <label className='flex flex-col mb-10 gap-3 w-full px-10 justify-between'>
           <span className='text-xl'>Email:</span>
-          <input type="email" className='pl-3 outline-none bg-transparent border-b border-[#6374ae] rounded-b-md' ref={inpEmail} />
+          <input type="email" className='pl-3 outline-none bg-transparent border-b border-[#6374ae] rounded-b-md' ref={inpEmail} defaultValue={data ? data?.email : ""}/>
         </label>
         <label className='flex flex-col mb-10 gap-3 w-full px-10 justify-between'>
           <span className='text-xl'>Dni:</span>
-          <input onWheel={(e) => e.target.blur()} type="number" className='pl-3 outline-none bg-transparent border-b border-[#6374ae] rounded-b-md' ref={inpDni} />
+          <input onWheel={(e) => e.target.blur()} type="number" className='pl-3 outline-none bg-transparent border-b border-[#6374ae] rounded-b-md' ref={inpDni} defaultValue={data ? data?.dni : ""}/>
         </label>
         <label className='flex flex-col mb-10 gap-8 w-full px-10 justify-between'>
           <span className='text-xl'>Rol de usuario:</span>

@@ -11,6 +11,10 @@ public interface UserService {
     
     Optional<User> findById(Long id);
     
+    Optional<User> findByDni(int dni);
+    
+    Optional<User> findByEmail(String email);
+    
     void save(User user);
     
     void deleteById(Long id);

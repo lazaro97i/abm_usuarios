@@ -39,5 +39,15 @@ public class UserServiceImpl implements UserService {
     public boolean existsById(Long id) {
         return userRepository.existsById(id);
     }
+
+    @Override
+    public Optional<User> findByDni(int dni) {
+        return userRepository.findByDni(dni);
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
     
 }
