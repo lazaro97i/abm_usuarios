@@ -22,8 +22,6 @@ const UserForm = ({data}) => {
     }
     const res = await newUser(data)
 
-    console.log(res)
-
     if (res?.success) {
       document.getElementById("formNewUser").reset()
       toast.success("Usuario agregado correctamente");
@@ -31,6 +29,14 @@ const UserForm = ({data}) => {
       toast.error(res?.message?.message);
     }
 
+  }
+
+  console.log(data)
+
+  if(data?.role?.id===1){
+    document.getElementById("inpAdmin").checked = true
+  }else if(data?.role?.id===2){
+    document.getElementById("inpUser").checked = true
   }
 
   return (
@@ -52,11 +58,11 @@ const UserForm = ({data}) => {
           <span className='text-xl'>Rol de usuario:</span>
           <div className='flex gap-10 justify-center'>
             <label>
-              <input className='peer hidden' type="radio" value='1' name='role' onClick={(e) => { setRole(e.target.value) }} />
+              <input className='peer hidden' id='inpAdmin' type="radio" value='1' name='role' onClick={(e) => { setRole(e.target.value) }} />
               <p className='peer-checked:bg-[#3c7720] peer-checked:text-[#e7f0f8] cursor-pointer bg-transparent py-1 w-[100px] text-center rounded-md border border-[#6374ae] peer-checked:border-[#e7f0f8]'>Admin</p>
             </label>
             <label>
-              <input className='peer hidden' type="radio" value='2' name='role' onClick={(e) => { setRole(e.target.value) }} />
+              <input className='peer hidden' id='inpUser' type="radio" value='2' name='role' onClick={(e) => { setRole(e.target.value) }} />
               <p className='peer-checked:bg-[#3c7720] peer-checked:text-[#e7f0f8] cursor-pointer bg-transparent py-1 w-[100px] text-center rounded-md border border-[#6374ae] peer-checked:border-[#e7f0f8]'>Usuario</p>
             </label>
           </div>

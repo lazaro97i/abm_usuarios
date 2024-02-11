@@ -21,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "/update_user/:dni",
         element: <UpdateUser />
+      },
+      {
+        path: "/update_user/",
+        element: <UpdateUser />
       }
     ]
   }

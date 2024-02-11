@@ -15,7 +15,8 @@ const UpdateUser = () => {
     if(params.dni !== ":"){
         useEffect(()=>{
             getUser()
-        }, [params])
+            document.getElementById("searchDni").value = params.dni
+        }, [])
     }
 
     const getUser = async() =>{
@@ -47,7 +48,7 @@ const UpdateUser = () => {
                 </div>
             </label>
             <UserForm 
-                data={data}
+                data={data ? data : null}
             />
         </div>
     )
