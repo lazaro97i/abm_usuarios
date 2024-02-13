@@ -71,10 +71,11 @@ public class UserController {
 
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable Long id) {
+    @CrossOrigin(origins = "http://localhost:5173/")
+    @GetMapping("/{dni}")
+    public ResponseEntity<?> findById(@PathVariable int dni) {
 
-        Optional<User> userOpt = userService.findById(id);
+        Optional<User> userOpt = userService.findByDni(dni);
         data = new HashMap<>();
 
         if (userOpt.isPresent()) {
@@ -114,8 +115,29 @@ public class UserController {
     @PostMapping("")
     public ResponseEntity<?> save(@RequestBody UserDTO userDTO) {
 
+        Optional<User> dniExists = userService.findByDni(userDTO.getDni());
+        Optional<User> emailExists = userService.findByEmail(userDTO.getEmail());
+        
         data = new HashMap<>();
-
+        
+        if(emailExists.isPresent()){
+            data.put("success", false);
+            data.put("message", "El email ingresado ya pertenece a un usuario activo");
+            return new ResponseEntity<>(
+                    data,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+        
+        if(dniExists.isPresent()){
+            data.put("success", false);
+            data.put("message", "El dni ingresado ya pertenece a un usuario activo");
+            return new ResponseEntity<>(
+                    data,
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+        
         if (userDTO.getName().isBlank()
                 || userDTO.getEmail().isBlank()
                 || userDTO.getDni() == 0
@@ -147,6 +169,7 @@ public class UserController {
 
     }
 
+    @CrossOrigin(origins = "http://localhost:5173/")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateOne(@PathVariable Long id, @RequestBody UserDTO userDTO) {
 
@@ -161,12 +184,31 @@ public class UserController {
                 user.setName(userDTO.getName());
             }
             if (userDTO.getDni() != 0) {
+                Optional<User> dniExists = userService.findByDni(userDTO.getDni());
+                if(user.getDni() != userDTO.getDni() && dniExists.isPresent()){
+                    data.put("success", false);
+                    data.put("message", "El dni ingresado ya pertenece a un usuario activo");
+                    return new ResponseEntity<>(
+                            data,
+                            HttpStatus.BAD_REQUEST
+                    );
+                }
                 user.setDni(userDTO.getDni());
             }
             if (userDTO.getRole() != null) {
                 user.setRole(userDTO.getRole());
             }
+        
             if (userDTO.getEmail() != null) {
+                Optional<User> emailExists = userService.findByEmail(userDTO.getEmail());
+                if(user.getEmail()!= userDTO.getEmail()&& emailExists.isPresent()){
+                    data.put("success", false);
+                    data.put("message", "El email ingresado ya pertenece a un usuario activo");
+                    return new ResponseEntity<>(
+                            data,
+                            HttpStatus.BAD_REQUEST
+                    );
+                }
                 user.setEmail(userDTO.getEmail());
             }
             

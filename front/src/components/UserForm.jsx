@@ -4,7 +4,7 @@ import userServices from '../services/userServices'
 
 const { newUser } = userServices
 
-const UserForm = () => {
+const UserForm = ({data}) => {
 
   const [role, setRole] = useState('')
 
@@ -20,45 +20,48 @@ const UserForm = () => {
       dni: inpDni.current.value,
       role: { id: role }
     }
-    const res = await toast.promise(
-      newUser(data),
-      {
-        loading: 'Creando usuario...',
-        success: 'Usuario creado exitosamente!',
-        error: 'Error al crear el usuario'
-      }, { duration: 3000 }
-    )
+    const res = await newUser(data)
+
     if (res?.success) {
       document.getElementById("formNewUser").reset()
+      toast.success("Usuario agregado correctamente");
+    }else{
+      toast.error(res?.message?.message);
     }
 
   }
 
+  // if(data?.role?.id===1){
+  //   document.getElementById("inpAdmin").checked = true
+  // }
+  // if(data?.role?.id===2){
+  //   document.getElementById("inpUser").checked = true
+  // }
+
   return (
     <div className='flex flex-col justify-start items-center w-full'>
-      <h2 className='text-3xl mb-20 mt-10 underline text-[#262c40]'>Agregar usuario</h2>
       <form id='formNewUser' className='self-center grid grid-cols-1 w-full max-w-[650px]'>
         <label className='flex flex-col mb-10 gap-3 w-full px-10 justify-between'>
           <span className='text-xl'>Apellido y nombre:</span>
-          <input type="text" className='pl-3 outline-none bg-transparent border-b border-[#6374ae] rounded-b-md' ref={inpName} />
+          <input type="text" className='pl-3 outline-none bg-transparent border-b border-[#6374ae] rounded-b-md' ref={inpName} defaultValue={data ? data?.name : ""}/>
         </label>
         <label className='flex flex-col mb-10 gap-3 w-full px-10 justify-between'>
           <span className='text-xl'>Email:</span>
-          <input type="email" className='pl-3 outline-none bg-transparent border-b border-[#6374ae] rounded-b-md' ref={inpEmail} />
+          <input type="email" className='pl-3 outline-none bg-transparent border-b border-[#6374ae] rounded-b-md' ref={inpEmail} defaultValue={data ? data?.email : ""}/>
         </label>
         <label className='flex flex-col mb-10 gap-3 w-full px-10 justify-between'>
           <span className='text-xl'>Dni:</span>
-          <input onWheel={(e) => e.target.blur()} type="number" className='pl-3 outline-none bg-transparent border-b border-[#6374ae] rounded-b-md' ref={inpDni} />
+          <input onWheel={(e) => e.target.blur()} type="number" className='pl-3 outline-none bg-transparent border-b border-[#6374ae] rounded-b-md' ref={inpDni} defaultValue={data ? data?.dni : ""}/>
         </label>
         <label className='flex flex-col mb-10 gap-8 w-full px-10 justify-between'>
           <span className='text-xl'>Rol de usuario:</span>
           <div className='flex gap-10 justify-center'>
             <label>
-              <input className='peer hidden' type="radio" value='1' name='role' onClick={(e) => { setRole(e.target.value) }} />
+              <input className='peer hidden' id='inpAdmin' type="radio" value='1' name='role' onClick={(e) => { setRole(e.target.value)}} />
               <p className='peer-checked:bg-[#3c7720] peer-checked:text-[#e7f0f8] cursor-pointer bg-transparent py-1 w-[100px] text-center rounded-md border border-[#6374ae] peer-checked:border-[#e7f0f8]'>Admin</p>
             </label>
             <label>
-              <input className='peer hidden' type="radio" value='2' name='role' onClick={(e) => { setRole(e.target.value) }} />
+              <input className='peer hidden' id='inpUser' type="radio" value='2' name='role' onClick={(e) => { setRole(e.target.value)}} />
               <p className='peer-checked:bg-[#3c7720] peer-checked:text-[#e7f0f8] cursor-pointer bg-transparent py-1 w-[100px] text-center rounded-md border border-[#6374ae] peer-checked:border-[#e7f0f8]'>Usuario</p>
             </label>
           </div>
