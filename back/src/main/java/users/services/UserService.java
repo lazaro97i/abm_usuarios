@@ -3,6 +3,7 @@ package users.services;
 
 import java.util.List;
 import java.util.Optional;
+import org.springframework.http.ResponseEntity;
 import users.entities.User;
 
 public interface UserService {
@@ -10,7 +11,7 @@ public interface UserService {
     List<User> findAll();
     
     Optional<User> findById(Long id);
-    
+
     Optional<User> findByDni(int dni);
     
     Optional<User> findByEmail(String email);
