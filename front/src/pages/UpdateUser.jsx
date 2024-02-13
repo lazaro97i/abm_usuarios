@@ -7,21 +7,25 @@ const API_URL = import.meta.env.VITE_APP_API_URL
 
 const UpdateUser = () => {
 
+    const [data, setData] = useState({})
     const params = useParams()
-    const [data, setData] = useState(null)
-
     const inpDni = useRef(null)
 
-    if(params.dni !== ":"){
         useEffect(()=>{
             getUser()
-            document.getElementById("searchDni").value = params.dni
-        }, [])
-    }
+            if(params?.dni){
+                document.getElementById("searchDni").value = params.dni
+            }else{
+                document.getElementById("searchDni").value = ""
+            }
+        }, [params])
 
     const getUser = async() =>{
         try{
-            const res = await axios.get(`${API_URL}/${params.dni}`)
+            let res
+            if(params?.dni !== undefined){
+                res = await axios.get(`${API_URL}/${params.dni}`)
+            }
             setData(res?.data?.data)
         }catch(e){
             console.log(e)
@@ -30,8 +34,8 @@ const UpdateUser = () => {
 
     const handleSearch = async()=>{
         try{
-            const res = await axios.get(`${API_URL}/${inpDni.current.value}`)
             setData(res?.data?.data)
+            const res = await axios.get(`${API_URL}/${inpDni.current.value}`)
         }catch(e){
             console.log(e)
         }
@@ -48,7 +52,7 @@ const UpdateUser = () => {
                 </div>
             </label>
             <UserForm 
-                data={data ? data : null}
+                data={data}
             />
         </div>
     )
