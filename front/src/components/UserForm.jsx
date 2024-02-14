@@ -43,9 +43,10 @@ const UserForm = ({ data, update }) => {
 
   if (data?.role?.id === 1) {
     document.getElementById("inpAdmin").defaultChecked = true
-  }
-  if (data?.role?.id === 2) {
+  } else if (data?.role?.id === 2) {
     document.getElementById("inpUser").defaultChecked = true
+  } else {
+    document.getElementsByName("role").forEach((e) => e.defaultChecked = false)
   }
 
   useEffect(() => {
