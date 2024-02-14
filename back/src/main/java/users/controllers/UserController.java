@@ -180,7 +180,14 @@ public class UserController {
 
             User user = userOp.get();
 
-            if (userDTO.getName() != null) {
+            if (userDTO.getName().isBlank()) {
+                data.put("success", false);
+                data.put("message", "Nombre requerido");
+                return new ResponseEntity<>(
+                            data,
+                            HttpStatus.BAD_REQUEST
+                    );
+            }else{
                 user.setName(userDTO.getName());
             }
             if (userDTO.getDni() != 0) {
@@ -194,14 +201,35 @@ public class UserController {
                     );
                 }
                 user.setDni(userDTO.getDni());
+            }else{
+                data.put("success", false);
+                data.put("message", "Dni requerido");
+                return new ResponseEntity<>(
+                            data,
+                            HttpStatus.BAD_REQUEST
+                    );
             }
             if (userDTO.getRole() != null) {
                 user.setRole(userDTO.getRole());
+            }else{
+                data.put("success", false);
+                data.put("message", "Rol de usuario requerido");
+                return new ResponseEntity<>(
+                            data,
+                            HttpStatus.BAD_REQUEST
+                    );
             }
         
-            if (userDTO.getEmail() != null) {
+            if (userDTO.getEmail().isBlank()) {
+                data.put("success", false);
+                data.put("message", "Email requerido");
+                return new ResponseEntity<>(
+                            data,
+                            HttpStatus.BAD_REQUEST
+                    );
+            }else{
                 Optional<User> emailExists = userService.findByEmail(userDTO.getEmail());
-                if(user.getEmail()!= userDTO.getEmail()&& emailExists.isPresent()){
+                if(!user.getEmail().equals(userDTO.getEmail()) && emailExists.isPresent()){
                     data.put("success", false);
                     data.put("message", "El email ingresado ya pertenece a un usuario activo");
                     return new ResponseEntity<>(
@@ -215,7 +243,7 @@ public class UserController {
             userService.save(user);
             
             data.put("success", true);
-            data.put("message", "usuario actualizado correctamente");
+            data.put("message", "Usuario actualizado correctamente");
             data.put("dataUpdated", user);
 
             return new ResponseEntity<>(

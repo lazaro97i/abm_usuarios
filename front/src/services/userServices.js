@@ -48,10 +48,25 @@ const deleteUser = async (id) => {
   }
 }
 
+const updateUser = async (data) => {
+
+  try {
+    const response = await axios.put(`${API_URL}/${data.id}`, data)
+    return response.data
+  } catch (e) {
+    console.log(e)
+    if (!data.id) {
+      e.response.data.message = "Debe ingresar un usuario"
+    }
+    return e
+  }
+}
+
 const userServices = {
   getUsers,
   newUser,
-  deleteUser
+  deleteUser,
+  updateUser
 }
 
 export default userServices
