@@ -24,8 +24,8 @@ const UserForm = ({ data, update }) => {
       newData.id = data.id
       const resUpdate = await updateUser(newData)
       if (resUpdate?.success) {
-        document.getElementById("formUser").reset()
         toast.success("Usuario modificado correctamente")
+        setTimeout(() => { window.location = "/" }, 2000)
       } else {
         toast.error(resUpdate?.response?.data?.message)
       }
